@@ -1,0 +1,37 @@
+{% extends 'restaurant/base.html' %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2 class="section-title">About Little Lemon</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+        <div>
+            <p style="line-height:1.8;font-size:1.1rem;margin-bottom:1.5rem;">
+                Little Lemon is a charming neighborhood bistro that serves simple food and classic cocktails in a lively but casual environment. The restaurant features a locally sourced menu with daily specials.
+            </p>
+            <p style="line-height:1.8;font-size:1.1rem;">
+                We focus on traditional Mediterranean recipes served with a modern twist — family owned and operated since 1992.
+            </p>
+        </div>
+        <div style="background:#F4CE14;border-radius:1rem;height:300px;display:flex;align-items:center;justify-content:center;font-size:6rem;">🍋</div>
+    </div>
+
+    <div style="margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:center;">
+        <div style="background:#495E57;color:#EDEFEE;padding:2rem;border-radius:1rem;">
+            <div style="font-size:2rem;margin-bottom:0.5rem;">🌿</div>
+            <h3>Fresh Ingredients</h3>
+            <p>Locally sourced, daily fresh</p>
+        </div>
+        <div style="background:#495E57;color:#EDEFEE;padding:2rem;border-radius:1rem;">
+            <div style="font-size:2rem;margin-bottom:0.5rem;">👨‍🍳</div>
+            <h3>Expert Chefs</h3>
+            <p>Trained in Mediterranean cuisine</p>
+        </div>
+        <div style="background:#495E57;color:#EDEFEE;padding:2rem;border-radius:1rem;">
+            <div style="font-size:2rem;margin-bottom:0.5rem;">❤️</div>
+            <h3>Made with Love</h3>
+            <p>Family recipes, family atmosphere</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

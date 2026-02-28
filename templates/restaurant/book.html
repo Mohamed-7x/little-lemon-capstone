@@ -1,0 +1,76 @@
+{% extends 'restaurant/base.html' %}
+{% block title %}Book a Table{% endblock %}
+
+{% block content %}
+<div class="content" style="max-width:600px;">
+    <h2 class="section-title">Book a Table</h2>
+    <div id="message" style="display:none;padding:1rem;border-radius:0.5rem;margin-bottom:1rem;"></div>
+
+    <div style="background:#f9f9f9;padding:2rem;border-radius:1rem;">
+        <div style="margin-bottom:1.5rem;">
+            <label style="display:block;font-weight:bold;margin-bottom:0.5rem;">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name"
+                style="width:100%;padding:0.75rem;border:1px solid #ddd;border-radius:0.5rem;font-size:1rem;">
+        </div>
+        <div style="margin-bottom:1.5rem;">
+            <label style="display:block;font-weight:bold;margin-bottom:0.5rem;">Number of Guests</label>
+            <input type="number" id="guests" min="1" max="20" value="2"
+                style="width:100%;padding:0.75rem;border:1px solid #ddd;border-radius:0.5rem;font-size:1rem;">
+        </div>
+        <div style="margin-bottom:1.5rem;">
+            <label style="display:block;font-weight:bold;margin-bottom:0.5rem;">Date & Time</label>
+            <input type="datetime-local" id="datetime"
+                style="width:100%;padding:0.75rem;border:1px solid #ddd;border-radius:0.5rem;font-size:1rem;">
+        </div>
+        <div style="margin-bottom:1.5rem;">
+            <label style="display:block;font-weight:bold;margin-bottom:0.5rem;">Auth Token (required)</label>
+            <input type="text" id="token" placeholder="Your API token"
+                style="width:100%;padding:0.75rem;border:1px solid #ddd;border-radius:0.5rem;font-size:1rem;">
+        </div>
+        <button onclick="makeBooking()" class="btn" style="width:100%;">Reserve Now</button>
+    </div>
+</div>
+
+<script>
+async function makeBooking() {
+    const name = document.getElementById('name').value;
+    const guests = document.getElementById('guests').value;
+    const datetime = document.getElementById('datetime').value;
+    const token = document.getElementById('token').value;
+    const msg = document.getElementById('message');
+
+    if (!name || !guests || !datetime || !token) {
+        msg.style.display = 'block';
+        msg.style.background = '#fee';
+        msg.style.color = '#c00';
+        msg.textContent = 'Please fill in all fields.';
+        return;
+    }
+
+    const response = await fetch('/api/bookings/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + token,
+        },
+        body: JSON.stringify({
+            name: name,
+            no_of_guests: parseInt(guests),
+            booking_date: new Date(datetime).toISOString(),
+        }),
+    });
+
+    msg.style.display = 'block';
+    if (response.ok) {
+        msg.style.background = '#efe';
+        msg.style.color = '#060';
+        msg.textContent = '✅ Booking confirmed for ' + name + '!';
+    } else {
+        const data = await response.json();
+        msg.style.background = '#fee';
+        msg.style.color = '#c00';
+        msg.textContent = 'Error: ' + JSON.stringify(data);
+    }
+}
+</script>
+{% endblock %}

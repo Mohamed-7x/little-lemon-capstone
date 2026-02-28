@@ -1,0 +1,47 @@
+{% extends 'restaurant/base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>Little Lemon</h1>
+        <h2>Chicago</h2>
+        <p>We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
+        <a href="/book/" class="btn">Reserve a Table</a>
+    </div>
+    <div class="hero-image">
+        <div style="width:300px;height:300px;background:#F4CE14;border-radius:1rem;display:flex;align-items:center;justify-content:center;font-size:5rem;">🍋</div>
+    </div>
+</section>
+
+<div class="content">
+    <h2 class="section-title">This Week's Specials</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;">
+        {% for dish in specials %}
+        <div style="border:1px solid #ddd;border-radius:1rem;overflow:hidden;">
+            <div style="background:#495E57;height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;">🥗</div>
+            <div style="padding:1rem;">
+                <h3>{{ dish.title }}</h3>
+                <p style="color:#495E57;font-weight:bold;">${{ dish.price }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <div style="border:1px solid #ddd;border-radius:1rem;overflow:hidden;">
+            <div style="background:#495E57;height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;">🥗</div>
+            <div style="padding:1rem;"><h3>Greek Salad</h3><p style="color:#495E57;font-weight:bold;">$12.99</p></div>
+        </div>
+        <div style="border:1px solid #ddd;border-radius:1rem;overflow:hidden;">
+            <div style="background:#495E57;height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;">🍞</div>
+            <div style="padding:1rem;"><h3>Bruschetta</h3><p style="color:#495E57;font-weight:bold;">$7.99</p></div>
+        </div>
+        <div style="border:1px solid #ddd;border-radius:1rem;overflow:hidden;">
+            <div style="background:#495E57;height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;">🍋</div>
+            <div style="padding:1rem;"><h3>Lemon Dessert</h3><p style="color:#495E57;font-weight:bold;">$5.50</p></div>
+        </div>
+        {% endfor %}
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+        <a href="/menu/" class="btn">View Full Menu</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'restaurant/base.html' %}
+{% block title %}Menu{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2 class="section-title">Our Menu</h2>
+    <table style="width:100%;border-collapse:collapse;">
+        <thead>
+            <tr style="background:#495E57;color:#EDEFEE;">
+                <th style="padding:1rem;text-align:left;">Item</th>
+                <th style="padding:1rem;text-align:right;">Price</th>
+                <th style="padding:1rem;text-align:right;">Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in menu_items %}
+            <tr style="border-bottom:1px solid #ddd;">
+                <td style="padding:1rem;">{{ item.title }}</td>
+                <td style="padding:1rem;text-align:right;">${{ item.price }}</td>
+                <td style="padding:1rem;text-align:right;">{{ item.inventory }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" style="padding:2rem;text-align:center;color:#888;">
+                    No menu items available yet. Check back soon!
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div style="margin-top:2rem;">
+        <a href="/book/" class="btn">Book a Table</a>
+    </div>
+</div>
+{% endblock %}
