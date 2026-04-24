@@ -3,14 +3,21 @@ Django settings for Little Lemon project.
 """
 
 from pathlib import Path
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = '***REMOVED***'
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default='localhost,127.0.0.1',
+    cast=lambda v: [s.strip() for s in v.split(',') if s.strip()]
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,15 +66,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'littlelemon.wsgi.application'
 
-# Database - MySQL
+# Database - credentials loaded from .env (never hardcoded)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'littlelemon',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'USER': '***REMOVED***',       # Change to your MySQL username
-        'PASSWORD': '***REMOVED***',   # Change to your MySQL password
+        'NAME': config('DB_NAME', default='littlelemon'),
+        'HOST': config('DB_HOST', default='127.0.0.1'),
+        'PORT': config('DB_PORT', default='3306'),
+        'USER': config('DB_USER', default=''),
+        'PASSWORD': config('DB_PASSWORD', default=''),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
@@ -107,5 +114,10 @@ DJOSER = {
     'SERIALIZERS': {},
 }
 
-# CORS
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS - restricted to explicit origins only
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = config(
+    'CORS_ALLOWED_ORIGINS',
+    default='',
+    cast=lambda v: [s.strip() for s in v.split(',') if s.strip()]
+)
